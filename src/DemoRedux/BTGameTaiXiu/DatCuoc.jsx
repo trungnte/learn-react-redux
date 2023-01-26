@@ -7,7 +7,7 @@ import xucxac1 from "../../asset/img/1.png"
 import xucxac2 from "../../asset/img/2.png"
 import xucxac3 from "../../asset/img/3.png"
 
-export default class DatCuoc extends Component {
+class DatCuoc extends Component {
   render() {
     console.log("props Dat cuoc: ", this.props);
     return (
@@ -37,4 +37,4 @@ export default class DatCuoc extends Component {
 // }
 
 //! Kết nối component tới store
-// export default connect()(DatCuoc);
+export default connect()(DatCuoc);
