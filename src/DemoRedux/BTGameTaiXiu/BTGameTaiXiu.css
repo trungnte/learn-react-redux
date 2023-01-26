@@ -1,0 +1,18 @@
+.xucxac {
+    width: 80px;
+}
+
+.btn-datcuoc{
+    padding: 50px;
+    font-size: 3rem;
+}
+
+.info p, .info button{
+    font-size: 2rem;
+}
+
+/* FIXME: luu hinh o asset */
+.game-content {
+    background-image: url(../../asset/img/bgGame.png);
+    height: 100vh;
+}
