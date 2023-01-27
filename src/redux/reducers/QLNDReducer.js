@@ -16,8 +16,11 @@ const initialState = {
 export const QLNDReducer = (state = initialState, action) => {
   switch (action.type) {
 
-  // case "":
-  //   return { ...state, ...payload }
+  case "THEM_ND":
+    // state.mangNguoiDung.push(action.nd); //! khong doi dia chi !!!
+    console.log(state.mangNguoiDung);
+    state.mangNguoiDung = [...state.mangNguoiDung, action.nd];
+    return {...state}
 
   default:
     return state

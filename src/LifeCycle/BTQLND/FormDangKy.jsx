@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 
-export default class FormDangKy extends Component {
+import { connect } from 'react-redux'
+class FormDangKy extends Component {
 
   //! B1: lay data tu form => luu vao state
   state = {
@@ -10,7 +11,7 @@ export default class FormDangKy extends Component {
       matKhau: "",
       sdt: "",
       email: "",
-      maLoaiND: ""
+      maLoaiND: "Khách hàng"
     },
     errors: {
       taiKhoan: "",
@@ -30,11 +31,26 @@ export default class FormDangKy extends Component {
     let newValues = {...this.state.values};
     newValues[name] = value;
 
+    let typeform = event.target.getAttribute("typeform");
+    console.log("typeform:", typeform);
     let messageError = "";
     // kiem tra loi
     if (value.trim() === "") {
       messageError = `${name} khong dc de trong`;
     }
+
+    //! kiem tra email
+    let regexp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    if (typeform === "email") {
+      // neu la email
+      if (!regexp.test(value)) {
+        // value khong dung voi dinh dang regexp
+        messageError = `Email khong dung dinh dang`;
+      }
+
+    }
+
+
     let newErrors = {...this.state.errors};
     newErrors[name] = messageError;
 
@@ -45,13 +61,53 @@ export default class FormDangKy extends Component {
     });
   }
 
+  handleOnSubmit = (event) => {
+    // ! Ngan load lai trang web khi submit
+    event.preventDefault();
+    // console.log("handleOnSubmit:");
+    let isValid = true;
+    //! kiem tra errors con chua noi dung nao loi khong?
+    for (const property in this.state.errors) {
+      if (this.state.errors[property] !== "") {
+        // thuoc tinh con bi loi
+        isValid = false;
+        console.log("Error: ", property); // ten thuoc tinh
+      }
+    
+    }
+
+    //! kiem tra du lieu rong khi user khong doi gia tri, khong chay onChange
+    for (const property in this.state.values) {
+      if (this.state.values[property] === "") {
+        // thuoc tinh rong
+        isValid = false;
+        console.log("property: ", property);
+      }
+    }
+
+    if (isValid) {
+      // khong con loi -> day values (Nguoi dung moi) len redux
+      // console.log("Hop le");
+      let action = {
+        type: "THEM_ND",
+        nd: this.state.values
+      }
+      this.props.dispatch(action);
+    }
+    else {
+      alert("Form khong duoc de trong");
+    }
+
+
+  }
+
   render() {
     return (
       <div className="row">
           <div className="col-12">
             <h2 className="bg-dark text-white">Form Đăng Ký</h2>
 
-            <form>
+            <form onSubmit={this.handleOnSubmit} >
               <div className="row py-3">
                 <div className="col">
                   <label htmlFor="taiKhoan">Tài khoản</label>
@@ -109,6 +165,7 @@ export default class FormDangKy extends Component {
                   <label htmlFor="email">Email</label>
                   <input
                     onChange={this.handleOnChange}
+                    typeform="email"
                     name="email"
                     type="text"
                     className="form-control"
@@ -139,3 +196,6 @@ export default class FormDangKy extends Component {
     )
   }
 }
+
+
+export default connect()(FormDangKy);
