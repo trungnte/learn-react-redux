@@ -15,8 +15,20 @@ class TableNguoiDung extends Component {
                 <td>{nd.email}</td>
                 <td>{nd.maLoaiND}</td>
                 <td>
-                  <button className="btn btn-success">Sửa</button>
-                  <button className="btn btn-danger">Xoá</button>
+                  <button onClick={() => {
+                    let action = {
+                      type: "XEM_CHI_TIET",
+                      ndXem: nd
+                    }
+                    this.props.dispatch(action);
+                  }} className="btn btn-success">Sửa</button>
+                  <button onClick={() => {
+                    let action = {
+                      type: "XOA_ND",
+                      tkXoa: nd.taiKhoan
+                    }
+                    this.props.dispatch(action);
+                  }} className="btn btn-danger">Xoá</button>
                 </td>
               </tr>
     });
