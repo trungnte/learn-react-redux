@@ -1,7 +1,29 @@
 import React, { Component } from 'react'
 
-export default class TableNguoiDung extends Component {
+import { connect } from 'react-redux';
+class TableNguoiDung extends Component {
+
+  renderTable = () => {
+    let stt = 1;
+    return this.props.mangNguoiDung.map((nd) => {
+      return <tr key={nd.taiKhoan}>
+                <td>{stt++}</td>
+                <td>{nd.taiKhoan}</td>
+                <td>{nd.hoTen}</td>
+                <td>{nd.matKhau}</td>
+                <td>{nd.sdt}</td>
+                <td>{nd.email}</td>
+                <td>{nd.maLoaiND}</td>
+                <td>
+                  <button className="btn btn-success">Sửa</button>
+                  <button className="btn btn-danger">Xoá</button>
+                </td>
+              </tr>
+    });
+  }
+
   render() {
+    console.log("TableND: ", this.props);
     return (
       <div className="row">
           <div className="col-12">
@@ -21,19 +43,7 @@ export default class TableNguoiDung extends Component {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>user123</td>
-                  <td>Nguyễn Khách Hàng</td>
-                  <td>123456</td>
-                  <td>1234567890</td>
-                  <td>test@gmail.com</td>
-                  <td>Khách hàng</td>
-                  <td>
-                    <button className="btn btn-success">Sửa</button>
-                    <button className="btn btn-danger">Xoá</button>
-                  </td>
-                </tr>
+                {this.renderTable()}
               </tbody>
             </table>
 
@@ -43,3 +53,11 @@ export default class TableNguoiDung extends Component {
     )
   }
 }
+
+const mapStateToProps = (rootReducer) => {
+  return {
+    mangNguoiDung: rootReducer.QLNDReducer.mangNguoiDung
+  }
+}
+
+export default connect(mapStateToProps)(TableNguoiDung);
