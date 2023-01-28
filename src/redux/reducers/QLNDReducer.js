@@ -87,8 +87,34 @@ export const QLNDReducer = (state = initialState, action) => {
     return {...state}
 
   case "XEM_CHI_TIET":
-    state.nguoiDungChiTiet = action.ndXem;
+    // state.nguoiDungChiTiet = action.ndXem;
+    state.nguoiDung.values = action.ndXem;
+    state.nguoiDung = {...state.nguoiDung};
     return {...state}
+
+  case "CAP_NHAT":
+    // Tim user trong mang (ma, id, taiKhoan)
+    // find(), findIndex()
+    //! dung find
+    // let userFind = state.mangNguoiDung.find((nd) => {
+    //   return nd.taiKhoan === action.ndCapNhat.taiKhoan
+    // });
+    // if (userFind) {
+    //   userFind.hoTen = action.hoTen;
+    //   ...
+    // }
+
+    //! dung findIndex
+    let indexCapNhat = state.mangNguoiDung.findIndex((nd) => {
+      return nd.taiKhoan === action.ndCapNhat.taiKhoan
+    });
+
+    // Cap nhat thong tin cua user tim dc
+    if(indexCapNhat > -1) {
+      state.mangNguoiDung[indexCapNhat] = action.ndCapNhat;
+    }
+
+    return state
 
   default:
     return state

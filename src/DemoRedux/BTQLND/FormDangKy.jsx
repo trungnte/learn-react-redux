@@ -80,8 +80,8 @@ class FormDangKy extends Component {
     // console.log("handleOnSubmit:");
     let isValid = true;
     //! kiem tra errors con chua noi dung nao loi khong?
-    for (const property in this.state.errors) {
-      if (this.state.errors[property] !== "") {
+    for (const property in this.props.nguoiDung.errors) {
+      if (this.props.nguoiDung.errors[property] !== "") {
         // thuoc tinh con bi loi
         isValid = false;
         console.log("Error: ", property); // ten thuoc tinh
@@ -90,8 +90,8 @@ class FormDangKy extends Component {
     }
 
     //! kiem tra du lieu rong khi user khong doi gia tri, khong chay onChange
-    for (const property in this.state.values) {
-      if (this.state.values[property] === "") {
+    for (const property in this.props.nguoiDung.values) {
+      if (this.props.nguoiDung.values[property] === "") {
         // thuoc tinh rong
         isValid = false;
         console.log("property: ", property);
@@ -103,7 +103,7 @@ class FormDangKy extends Component {
       // console.log("Hop le");
       let action = {
         type: "THEM_ND",
-        nd: this.state.values
+        nd: this.props.nguoiDung.values
       }
       this.props.dispatch(action);
     }
@@ -208,8 +208,16 @@ class FormDangKy extends Component {
               </div>
 
               <div className="py-3">
-                <button className="btn btn-success mr-5">Submit</button>
-                <button className="btn btn-info">Reset</button>
+                <button  className="btn btn-success mr-5">Submit</button>
+                <button onClick={(event) => {
+                  event.preventDefault();
+                  let action = {
+                    type: "CAP_NHAT",
+                    ndCapNhat: this.props.nguoiDung.values
+                  }
+                  this.props.dispatch(action);
+                }} className="btn btn-success mr-5">Update</button>
+                <button type='reset' className="btn btn-info">Reset</button>
               </div>
             </form>
           </div>
