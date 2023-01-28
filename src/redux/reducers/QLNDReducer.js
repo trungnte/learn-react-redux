@@ -113,8 +113,8 @@ export const QLNDReducer = (state = initialState, action) => {
     if(indexCapNhat > -1) {
       state.mangNguoiDung[indexCapNhat] = action.ndCapNhat;
     }
-
-    return state
+    state.mangNguoiDung = [...state.mangNguoiDung];
+    return {...state}
 
   default:
     return state
