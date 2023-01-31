@@ -1,18 +1,18 @@
 import logo from './logo.svg';
 import './App.css';
 import BTGameTaiXiu from './DemoRedux/BTGameTaiXiu/BTGameTaiXiu';
-import BTLND from './DemoRedux/BTQLND/BTLND';
+// import BTLND from './DemoRedux/BTQLND/BTLND';
 import ParentComponent from './LifeCycle/DemoLifeCycle/ParentComponent';
-// import BTLND from './LifeCycle/BTQLND/BTLND';
+import BTLND from './LifeCycle/BTQLND/BTLND';
 
 function App() {
   return (
     <>
 
-      <ParentComponent/>
+      {/* <ParentComponent/> */}
 
 
-      {/* <BTLND/> */}
+      <BTLND/>
       {/* <BTLND/> */}
       {/* <BTGameTaiXiu/> */}
     </>

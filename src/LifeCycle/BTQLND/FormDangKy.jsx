@@ -101,10 +101,40 @@ class FormDangKy extends Component {
 
   }
 
+  // static getDerivedStateFromProps(newProps, currentState) {
+  //   console.log("FormDangKy: newProps: ", newProps);
+  //   console.log("FormDangKy: currentState: ", currentState);
+
+  //   //! Kiem tra neu props doi, thuc hien chuc nang xem thong tin
+  //   if (newProps.nguoiDungChiTiet.taiKhoan === currentState.values.taiKhoan) {
+  //     // -> du lieu khong doi
+  //     return currentState; // tra ve state cua component
+  //   } 
+    
+  //   // du lieu da thay doi
+  //   //! props do, luu props vao state de hien thi du lieu cua props (nguoi dung chi tiet) len UI
+  //   // return ve state moi!
+  //   return {
+  //     ...currentState, // copy du lieu ban dau cua state (errors)
+  //     values: newProps.nguoiDungChiTiet // luu gia tri cua nguoi dung chi tiet vao values
+  //   }
+  // }
+
+  //!Chỉ chạy khi props đổi
+  componentWillReceiveProps(newProps) {
+    this.setState({
+      values: newProps.nguoiDungChiTiet
+    });
+  }
+
   render() {
 
     console.log("Form:", this.props);
-    let {taiKhoan, hoTen, matKhau, sdt, email, maLoaiND} = this.props.nguoiDungChiTiet;
+    // let {taiKhoan, hoTen, matKhau, sdt, email, maLoaiND} = this.props.nguoiDungChiTiet;
+
+    //! Để gõ dc trên form thì phải binding data từ state => chức năng xem không chạy được
+    //! Solution: => dùng lifecycle kiểm tra khi nào props đổi => nếu props đổi (đang thực hiện chức năng xem) => lưu props vào state
+    let {taiKhoan, hoTen, matKhau, sdt, email, maLoaiND} = this.state.values;
     return (
       <div className="row">
           <div className="col-12">

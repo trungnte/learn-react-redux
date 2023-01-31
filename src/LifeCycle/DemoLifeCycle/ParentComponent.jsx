@@ -1,29 +1,31 @@
-import React, { Component } from 'react'
-import ChildComponent from './ChildComponent';
+import React, { Component } from "react";
+import CardVote from "./CardVote";
+import CardVotePureComponent from "./CardVotePureComponent";
+import ChildComponent from "./ChildComponent";
+import Footer from "./Footer";
 
 export default class ParentComponent extends Component {
-
-
   /**
    * Mounting chay khi load ung dung
    * Updating chay khi co su thay doi cua state, props =>
    *  render lai UI
-   * => props thay doi: khi lam thay doi data cua reducer => 
+   * => props thay doi: khi lam thay doi data cua reducer =>
    *          mapStateToProps => props thay doi
    *                    khi state cua component cha thay doi
    *          va co truyen state xuong props cua con
    * => state: thay doi khi setState
-   * 
+   *
    * Unmounting:
-   * 
-   * */ 
+   *
+   * */
 
   //! phuong thuc khoi tao
-  constructor(props){
+  constructor(props) {
     super(props);
-    this.state={
-      number:0
-    }
+    this.state = {
+      number: 0,
+      vote: 0,
+    };
     console.log("constructor Parent");
   }
 
@@ -44,26 +46,58 @@ export default class ParentComponent extends Component {
     return true;
   }
 
+  renderChild = () => {
+    if (this.state.number < 2) {
+      return <ChildComponent number={this.state.number}/>
+      
+    }
+    else {
+      return "";
+    }
+  }
 
   render() {
     console.log("render Parent");
     return (
-      <div className='container py-5'>
+      <div className="container py-5">
         <p>Parent</p>
-          <div className='py-5'>
-            <span>{this.state.number}</span>
-            <button onClick={() => {
+        <div className="py-5">
+          <span>{this.state.number}</span>
+          <button
+            onClick={() => {
               this.setState({
-                number: this.state.number + 1
+                number: this.state.number + 1,
               });
-            }} className='btn btn-danger'>+</button>
-          </div>
+            }}
+            className="btn btn-danger"
+          >
+            +
+          </button>
+        </div>
 
-        <ChildComponent number = {this.state.number}/>
+
+        {/* <ChildComponent number={this.state.number} /> */}
+        {this.renderChild()}
+
+        <p>Vote</p>
+
+        <button
+          onClick={() => {
+            this.setState({
+              vote: this.state.vote + 1,
+            });
+          }}
+          className="btn btn-danger"
+        >
+          +
+        </button>
+        <CardVote vote={this.state.vote} />
+
+        <CardVotePureComponent vote={this.state.vote}/>
+        <Footer />
       </div>
-    )
+    );
   }
-
 
   //!
   // Sau khi render, sau khi UI da load len
@@ -71,12 +105,18 @@ export default class ParentComponent extends Component {
   componentDidMount(prevProps, prevState) {
     // cac thu vien phu => co UI thi moi gan hieu ung
     // goi cac ham cua thu vien de gan hieu ung
-    console.log("componentDidMount Parent")
+    console.log("componentDidMount Parent");
   }
 
   //! Chay sau khi render giao dien (updating)
   componentDidUpdate(prevProps, prevState) {
-    console.log("componentDidUpdate Parent")
+    console.log("componentDidUpdate Parent");
   }
+
+  // se duoc goi o thoi diem truoc khi component bi xoa khoi UI
+  componentWillUnmount() {
+    console.log("componentWillUnmount Parent");
+  }
+
 
 }

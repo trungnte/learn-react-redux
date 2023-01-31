@@ -7,6 +7,7 @@ export default class ChildComponent extends Component {
     super(props);
     this.state={}
     console.log("constructor Child");
+    this.notifyStories = {}
   }
 
   static getDerivedStateFromProps(newProps, currentState) {
@@ -35,12 +36,23 @@ export default class ChildComponent extends Component {
 
   //! Chay sau khi render giao dien
   componentDidMount(prevProps, prevState) {
-    console.log("componentDidMount Child")
+    console.log("componentDidMount Child");
+    // sau khi load xong ung dung chay interval
+    this.notifyStories = setInterval(() => {
+      console.log("Check stories")
+    }, 1000);
   }
 
 
   //! Chay sau khi render giao dien (updating)
   componentDidUpdate(prevProps, prevState) {
     console.log("componentDidUpdate Child")
+  }
+
+  // se duoc goi o thoi diem truoc khi component bi xoa khoi UI
+  // co 1 doan code chay thong bao ve stories (thong bao moi giay 1 lan) => khi ma component bien mat thi can tat thong bao
+  componentWillUnmount() {
+    console.log("componentWillUnmount Child");
+    clearInterval(this.notifyStories);
   }
 }
